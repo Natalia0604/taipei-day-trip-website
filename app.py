@@ -1,4 +1,3 @@
-#keyword的地方有問題
 from flask import *
 import mysql.connector
 from mysql.connector import Error
