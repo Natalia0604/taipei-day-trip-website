@@ -87,7 +87,7 @@ def api_attraction(attractionId):
 		#找景點的圖片
 		mycursor.execute("SELECT image FROM attractionimage WHERE imageId=(%s)",(attractionId,))
 		getImage = mycursor.fetchall()
-		#將圖片url放進LIST
+		 #將圖片url放進LIST
 		imageList =[]
 		for img in getImage:
 			imageList.append(img)
