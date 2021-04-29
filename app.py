@@ -44,7 +44,7 @@ def api_attractions():
 		# mycursor.execute("SELECT * FROM attractions WHERE name LIKE %s ",(keyword,)) 
 		getAttraction = mycursor.fetchall()
 		#找景點的圖片
-		mycursor.execute("SELECT image FROM attractionImage ORDER BY imageId asc LIMIT %s,12 ",(limitNum,))
+		mycursor.execute("SELECT image FROM attractionimage ORDER BY imageId asc LIMIT %s,12 ",(limitNum,))
 		getImage = mycursor.fetchall()
 		#將圖片url放進LIST
 		imageList =[]
@@ -80,7 +80,7 @@ def api_attraction(attractionId):
 		mycursor.execute("SELECT id, name, category, description, address, transport, mrt, latitude, longitude FROM attractions WHERE id =(%s)",(attractionId,)) 
 		getAttraction = mycursor.fetchall()
 		#找景點的圖片
-		mycursor.execute("SELECT image FROM attractionImage WHERE imageId=(%s)",(attractionId,))
+		mycursor.execute("SELECT image FROM attractionimage WHERE imageId=(%s)",(attractionId,))
 		getImage = mycursor.fetchall()
 		#將圖片url放進LIST
 		imageList =[]
