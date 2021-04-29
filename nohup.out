@@ -4,3 +4,6 @@
    Use a production WSGI server instead.
  * Debug mode: off
  * Running on http://0.0.0.0:3000/ (Press CTRL+C to quit)
+1.161.123.68 - - [29/Apr/2021 10:06:25] "[37mGET /api/attractions?page=1&keyword=中正紀念堂 HTTP/1.1[0m" 200 -
+1.161.123.68 - - [29/Apr/2021 10:06:26] "[37mGET /api/attractions?page=1&keyword=中正紀念堂 HTTP/1.1[0m" 200 -
+1.161.123.68 - - [29/Apr/2021 10:06:29] "[37mGET /api/attractions?page=1 HTTP/1.1[0m" 200 -
