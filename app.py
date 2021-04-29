@@ -1,4 +1,3 @@
-#keyword的地方有問題
 from flask import *
 import mysql.connector
 from mysql.connector import Error
@@ -40,10 +39,15 @@ def api_attractions():
 	limitNum=page *12 #建立LIMIT 刪除前面資料的數字
 		
 	try:
-		#找景點的資料
-		mycursor.execute("SELECT * FROM attractions ORDER BY id asc LIMIT %s,12 ",(limitNum,)) 
-		# mycursor.execute("SELECT * FROM attractions WHERE name LIKE %s ",(keyword,)) 
-		getAttraction = mycursor.fetchall()
+		if keyword !='None':
+			#找景點的資料
+			mycursor.execute("SELECT id,name,category,description,address,transport,mrt,latitude,longitude,images FROM attractions WHERE name LIKE %s",(keyword,))
+			getAttraction = mycursor.fetchall()
+		else:
+			#找景點的資料
+			mycursor.execute("SELECT id,name,category,description,address,transport,mrt,latitude,longitude FROM attractions ORDER BY id asc LIMIT %s,12 ",(limitNum,)) 
+			getAttraction = mycursor.fetchall()
+
 		#找景點的圖片
 		mycursor.execute("SELECT image FROM attractionImage ORDER BY imageId asc LIMIT %s,12 ",(limitNum,))
 		getImage = mycursor.fetchall()
