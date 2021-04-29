@@ -1,0 +1,75 @@
+body{font-size:20px;padding:0px;}
+/* 標題及選單列的設定*/
+nav{
+    display:flex;
+    position: absolute;
+    width: 1920px;
+    height: 54px;
+    left: 0px;
+    top: 0px;
+    background: #FFFFFF;
+}
+/*文字:台北一日遊*/
+nav>.taipeiDayTrip{
+    flex:none;
+    position: absolute;
+    width: 150px;
+    height: 34px;
+    left: 0px;
+    top: 0px;
+    /* font-family: Noto Sans; */
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 34px;
+    /* identical to box height, or 113% */
+    color: #448899;
+}
+/* 盡量把空間塞滿 */
+nav>.space{flex:auto;}
+nav>.navButton1{
+    /* BUTTON */
+    position: static;
+    left: 11.9%;
+    right: 11.9%;
+    top: 29.41%;
+    bottom: 29.41%;
+    /* Body - Reg 16(13.3) */
+    /* font-family: Noto Sans TC; */
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 13px;
+    /* identical to box height, or 83% */
+    /* Gray 800 */
+    color: #666666;
+    /* Inside Auto Layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 10px 0px;
+}
+nav>.navButton2{
+    /* BUTTON */
+    position: static;
+    left: 10.99%;
+    right: 10.99%;
+    top: 29.41%;
+    bottom: 29.41%;
+    /* Body - Reg 16(13.3) */
+    /* font-family: Noto Sans TC; */
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 13px;
+    /* identical to box height, or 83% */
+    /* Gray 800 */
+    color: #666666;
+    /* Inside Auto Layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 10px 0px;
+}
+
+
