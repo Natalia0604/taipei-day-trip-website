@@ -39,23 +39,16 @@ def api_attractions():
 	limitNum=page *12 #建立LIMIT 刪除前面資料的數字
 		
 	try:
-		if keyword !='None':
+		if keyword!='None':
 			#找景點的資料
-			mycursor.execute("SELECT id,name,category,description,address,transport,mrt,latitude,longitude,images FROM attractions WHERE name LIKE %s",(keyword,))
+			string="SELECT id,name,category,description,address,transport,mrt,latitude,longitude,images FROM attractions WHERE name LIKE CONCAT('%',%s,'%') LIMIT %s,12 "
+			val=(keyword,limitNum)
+			mycursor.execute(string,val)
 			getAttraction = mycursor.fetchall()
 		else:
 			#找景點的資料
-			mycursor.execute("SELECT id,name,category,description,address,transport,mrt,latitude,longitude FROM attractions ORDER BY id asc LIMIT %s,12 ",(limitNum,)) 
+			mycursor.execute("SELECT id,name,category,description,address,transport,mrt,latitude,longitude,images FROM attractions ORDER BY id asc LIMIT %s,12 ",(limitNum,)) 
 			getAttraction = mycursor.fetchall()
-
-		#找景點的圖片
-		mycursor.execute("SELECT image FROM attractionimage ORDER BY imageId asc LIMIT %s,12 ",(limitNum,))
-		getImage = mycursor.fetchall()
-		#將圖片url放進LIST
-		imageList =[]
-		for img in getImage:
-			imageList.append(img)
-		# print(getAttraction)
 		attractionList=[] #建立List將12筆資料放入
 		for attraction in getAttraction:
 		#將MYSQL的資訊顯示於網頁上
@@ -70,7 +63,7 @@ def api_attractions():
 						"mrt":attraction[6],
 						"latitude":attraction[7],
 						"longitude":attraction[8],
-						"images":imageList[2]
+						"images":attraction[9]
 					}
 				attractionList.append(data) 
 		return jsonify({"nextPage":nextpage,"data":attractionList})
