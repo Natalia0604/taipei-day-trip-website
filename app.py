@@ -9,7 +9,7 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 #連接MYSQL資料庫
 try:
     #主機名稱、帳號、密碼、選擇的資料庫
-    connection = mysql.connector.connect(host="localhost",user="root",password="0604",database="travel_spot")
+    connection = mysql.connector.connect(host="localhost",user="root",password="nataliaSQL12345!",database="travel_spot")
 except Error as e:
     print("資料庫連接失敗: ", e)
 mycursor = connection.cursor()
@@ -49,7 +49,7 @@ def api_attractions():
 			getAttraction = mycursor.fetchall()
 
 		#找景點的圖片
-		mycursor.execute("SELECT image FROM attractionImage ORDER BY imageId asc LIMIT %s,12 ",(limitNum,))
+		mycursor.execute("SELECT image FROM attractionimage ORDER BY imageId asc LIMIT %s,12 ",(limitNum,))
 		getImage = mycursor.fetchall()
 		#將圖片url放進LIST
 		imageList =[]
@@ -85,7 +85,7 @@ def api_attraction(attractionId):
 		mycursor.execute("SELECT id, name, category, description, address, transport, mrt, latitude, longitude FROM attractions WHERE id =(%s)",(attractionId,)) 
 		getAttraction = mycursor.fetchall()
 		#找景點的圖片
-		mycursor.execute("SELECT image FROM attractionImage WHERE imageId=(%s)",(attractionId,))
+		mycursor.execute("SELECT image FROM attractionimage WHERE imageId=(%s)",(attractionId,))
 		getImage = mycursor.fetchall()
 		#將圖片url放進LIST
 		imageList =[]
