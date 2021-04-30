@@ -1,0 +1,14 @@
+nohup: ignoring input
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://0.0.0.0:3000/ (Press CTRL+C to quit)
+1.164.241.106 - - [30/Apr/2021 08:17:22] "[37mGET /api/attractions?page=0 HTTP/1.1[0m" 200 -
+1.164.241.106 - - [30/Apr/2021 08:17:23] "[37mGET /api/attractions?page=0 HTTP/1.1[0m" 200 -
+1.164.241.106 - - [30/Apr/2021 08:17:46] "[37mGET /api/attractions?page=0 HTTP/1.1[0m" 200 -
+1.164.241.106 - - [30/Apr/2021 08:17:47] "[37mGET /api/attractions?page=0 HTTP/1.1[0m" 200 -
+1.164.241.106 - - [30/Apr/2021 08:17:50] "[37mGET /api/attractions?page=1 HTTP/1.1[0m" 200 -
+1.164.241.106 - - [30/Apr/2021 08:17:54] "[37mGET /api/attractions?page=3 HTTP/1.1[0m" 200 -
+1.164.241.106 - - [30/Apr/2021 08:17:57] "[37mGET /api/attractions?page=0 HTTP/1.1[0m" 200 -
