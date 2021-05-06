@@ -9,7 +9,7 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 #連接MYSQL資料庫
 try:
     #主機名稱、帳號、密碼、選擇的資料庫
-    connection = mysql.connector.connect(host="localhost",user="root",password="nataliaSQL12345!",database="travel_spot")
+    connection = mysql.connector.connect(host="localhost",user="root",password="0604",database="travel_spot")
 except Error as e:
     print("資料庫連接失敗: ", e)
 mycursor = connection.cursor()
@@ -49,10 +49,15 @@ def api_attractions():
 			#找景點的資料
 			mycursor.execute("SELECT id,name,category,description,address,transport,mrt,latitude,longitude,images FROM attractions ORDER BY id asc LIMIT %s,12 ",(limitNum,)) 
 			getAttraction = mycursor.fetchall()
+		
+		#將圖片url放進LIST
+		imageList =[]
 		attractionList=[] #建立List將12筆資料放入
 		for attraction in getAttraction:
 		#將MYSQL的資訊顯示於網頁上
 			if getAttraction != []:
+				for img in attraction[9].split(',')[:-1]:
+					imageList.append(img)
 				data ={
 						"id":attraction[0],
 						"name":attraction[1],
@@ -63,7 +68,7 @@ def api_attractions():
 						"mrt":attraction[6],
 						"latitude":attraction[7],
 						"longitude":attraction[8],
-						"images":attraction[9]
+						"images":imageList[0]
 					}
 				attractionList.append(data) 
 		return jsonify({"nextPage":nextpage,"data":attractionList})
@@ -75,17 +80,14 @@ def api_attractions():
 def api_attraction(attractionId):
 	try:
 		#找景點的資料
-		mycursor.execute("SELECT id, name, category, description, address, transport, mrt, latitude, longitude FROM attractions WHERE id =(%s)",(attractionId,)) 
+		mycursor.execute("SELECT id, name, category, description, address, transport, mrt, latitude, longitude , images FROM attractions WHERE id =(%s)",(attractionId,)) 
 		getAttraction = mycursor.fetchall()
-		#找景點的圖片
-		mycursor.execute("SELECT image FROM attractionimage WHERE imageId=(%s)",(attractionId,))
-		getImage = mycursor.fetchall()
-		 #將圖片url放進LIST
+		#將圖片url放進LIST
 		imageList =[]
-		for img in getImage:
-			imageList.append(img)
 		#將MYSQL的資訊顯示於網頁上
 		if getAttraction != []:
+			for img in getAttraction[0][9].split(',')[:-1]:
+				imageList.append(img)
 			data ={
 				"id":getAttraction[0][0],
 				"name":getAttraction[0][1],
@@ -96,7 +98,7 @@ def api_attraction(attractionId):
 				"mrt":getAttraction[0][6],
 				"latitude":getAttraction[0][7],
 				"longitude":getAttraction[0][8],
-				"images":imageList[2]
+				"images":imageList[0]
 			}
 			return jsonify({"data":data})
 		else:
