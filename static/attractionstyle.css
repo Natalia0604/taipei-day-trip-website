@@ -1,0 +1,275 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+/* remember to define focus styles! */
+:focus {
+    outline: 0;
+}
+body {
+    line-height: 1;
+    color: black;
+    background: white;
+}
+ol, ul {
+    list-style: none;
+}
+/* tables still need ‘cellspacing=“0”’ in the markup */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+caption, th, td {
+    text-align: left;
+    font-weight: normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: “”;
+}
+blockquote, q {
+    quotes: “” “”;
+}
+/* -------------------------------------------------reset css---------------------------------------------------*/
+
+*{
+    box-sizing:border-box;
+}
+
+/*navigaterbar*/
+.header{
+    background-color: #ffffff;
+    height: 54px;
+    top:0;
+    position: sticky;
+    border-bottom: 1px solid #E8E8E8;    
+}
+.navContainer{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width:1200px;
+    margin:0px auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  
+    
+}
+/*文字:台北一日遊*/
+.taipeiDayTrip{
+    flex:none;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 54px;
+    color: #448899;
+}
+.menu{
+    float: right;
+}
+li{
+    font-family: "NotoSansCJKtc-Regular";
+    font-size: 16px;
+    color: #666666;
+    list-style-type: none;
+    float: left;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+li:hover{
+    background-color:pink;
+}
+a{
+    text-decoration: none;
+    color:#666666;
+    line-height: 54px;
+}
+/* content */
+.content{
+    width:1200px;
+    margin:auto;
+    /* background-color: aqua; */
+}
+/*圖片及右半邊的字*/
+.sectionContainer{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 37px;
+    margin-bottom: 37px;
+    /* background-color: brown; */
+}
+.contentImg{
+    width:540px;
+    height:406px;
+    margin-left:5px;
+    margin-right: 15px;
+    border-radius: 4px 4px 4px 4px;
+}
+.profile{
+    width:600px;
+    margin-left:15px;
+    margin-right:5px;
+}
+.name{
+    color:#666666;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 24px;
+    padding-bottom: 15px;
+}
+.categoryMrt{
+    font-size: 16px;
+    line-height: 22px;
+    padding-bottom: 20px;
+}
+.resevation{
+    width: 600px;
+    height: 302px;
+    background-color: #e8e8e8;
+    padding-top:15px;
+    padding-bottom: 15px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-radius: 5px;
+}
+h2{
+    color:#666666;
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+h3{
+    color:#666666;
+    padding-bottom: 15px;
+}
+span{
+    color:#666666;
+    font-size: 16px; 
+}
+.textbold{
+    color:#666666;
+    font-weight: bold;
+    padding-right: 5px;
+}
+.radio_btn{
+    width:18px;
+    height:18px;
+    background-color: #448899;/*圈圈顏色*/
+    margin-bottom: 23px;
+}
+.btn_booking{
+    width:154px;
+    height: 36px;
+    background-color: #448899;
+    color:#ffffff;
+    font-size: 19px;
+    border:0;
+    border-radius: 5px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+#date{
+    width: 193px;
+    height:35px;
+    padding-left: 5px;
+    margin-bottom: 15px;
+    border: 0;
+}
+
+/*下半部的字*/
+.infors{
+    color:#666666;
+    max-width:1180px;
+    padding-bottom: 100px;
+}
+.description{ 
+    display: flex;
+    flex-wrap:wrap;
+    height:auto;
+    padding-top: 50px;
+}
+.address{
+    display: flex;
+    flex-wrap:wrap;
+    padding-top: 20px;
+}
+.transport{
+    display: flex;
+    flex-wrap:wrap;
+    padding-top: 20px;
+}
+/* footer */
+footer{
+    margin-top:10px;
+    height:104px;
+    background-color: #757575;
+    line-height:104px;
+    text-align: center;
+}
+.copyright{
+    color:#FFFFFF;
+    display:inline-block;
+}
+
+/* media query RWD響應式設計*/
+
+@media only screen and (max-width:1199px){
+    .content{
+        max-width:100%;
+    }
+    .sectionContainer{
+        max-width: 100%;
+    }
+    .sectionContainer> .contentImg{
+        width: 95%;
+    } 
+    .sectionContainer>.profile{
+        width: 90%;
+        padding-top: 20px;
+        justify-content:center;
+        margin:auto;
+    }
+    .resevation{
+        width:95%;
+    } 
+    .infors{
+        padding-left: 10px;
+        width:95%;
+    }
+}
+
+@media only screen and (max-width:360px){
+    /*nav & herosection*/
+    .navContainer{
+        max-width:100%;
+    } 
+    .content{
+        max-width: 100%;
+        /* margin:auto; */
+    }
+    .profile{
+        padding-top: 20px;
+        margin:auto;
+        width: 100%;
+    }
+    .contentImg{
+        width: 100%;
+    }
+    .resevation{
+        width: 100%;
+    }
+}

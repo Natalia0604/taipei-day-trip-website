@@ -1,25 +1,45 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale, maximum-scale=1"/>
-<link href="indexstyle.css" rel="stylesheet" type="text/css" media="all" />
-</head>
-<body>
-    <nav>
-        <div class="taipeiDayTrip">台北一日遊</div>
-        <framset cols="50%,50%">
-            <frame src="booking.html">
-        </framset>
-        <div class="navButton1">預定行程</div>
-        <div class="navButton2">登入/註冊</div>
-    </nav>
-    <div class="heroSection">
-        <h1>輕鬆享受台北一日悠閒</h1>
-        <div>探索每個角落，體驗城市的深度旅遊行程</div>
-        <div><input type="text" name="attractionname"/><img src="C:\Users\88691\Desktop\frontend_practice\Assignment\week9\taipei-day-trip-website\img\icon_search.png"></div>
-        <img src="C:\Users\88691\Desktop\frontend_practice\Assignment\week9\taipei-day-trip-website\img\welcome_1.png">
-    </div>
-    <div class="content"></div>
-</body>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <title>台北一日遊index</title>
+        <link href="static/indexstyle.css" rel="stylesheet" type="text/css" media="all" />
+    </head>
+    <body onload="getData()">
+        <nav class="header">
+            <div class="navContainer">
+                <div class="taipeiDayTrip">台北一日遊</div>
+                <ul class="menu">
+                    <li><a href="#">預定行程</a></li>
+                    <li><a href="#">登入/註冊</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="heroSection">
+            <div class="heroContainer">
+                <h1>輕鬆享受台北一日悠閒</h1>
+                <h2>探索每個角落，體驗城市的深度旅遊行程</h2>
+                <div class="searchboxContainer">
+                    <input type="text" class="searchAttraction" id="keyword" placeholder="輸入景點名稱查詢"/>
+                    <button type="submit" class="searchBox" onclick="search()">
+                        <img class="searchIcon" src="static/img/icon_search.png">
+                    </button>
+                </div>  
+            </div>
+        </div>
+        <div class="content" id="content">
+            <!-- <div class="box">
+                <img class="contentImg" src="http://fakeimg.pl/270x162">
+                <div class="name">平安鐘</div>
+                <div class="textcontainer">
+                    <div class="attractionMrt">忠孝復興</div>
+                    <div class="attractionCategory">藝術</div>
+                </div> -->
+        </div>
+        <footer id="footer">
+            <div class="copyright">COPYRIGHT © 2021 台北一日遊</div>
+        </footer>
+        <script type="text/javascript" src="static/indexscript.js"></script>
+    </body>
 </html>

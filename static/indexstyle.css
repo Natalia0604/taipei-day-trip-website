@@ -1,0 +1,282 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+/* remember to define focus styles! */
+:focus {
+    outline: 0;
+}
+body {
+    line-height: 1;
+    color: black;
+    background: white;
+}
+ol, ul {
+    list-style: none;
+}
+/* tables still need ‘cellspacing=“0”’ in the markup */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+caption, th, td {
+    text-align: left;
+    font-weight: normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: “”;
+}
+blockquote, q {
+    quotes: “” “”;
+}
+/* -------------------------------------------------reset css---------------------------------------------------*/
+*{
+    box-sizing:border-box;
+}
+/*navigaterbar*/
+.header{
+    background-color: #ffffff;
+    height: 54px;
+    top:0;
+    position: sticky;
+    width:100%;    
+    z-index: 10;
+}
+.navContainer{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width:1200px;
+    margin:0px auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    
+}
+/*文字:台北一日遊*/
+.taipeiDayTrip{
+    flex:none;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 54px;
+    color: #448899;
+}
+.menu{
+    float: right;
+}
+li{
+    font-family: "NotoSansCJKtc-Regular";
+    font-size: 16px;
+    color: #666666;
+    list-style-type: none;
+    float: left;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+li:hover{
+    background-color:pink;
+}
+a{
+    text-decoration: none;
+    color:#666666;
+    line-height: 54px;
+}
+
+/*banner */
+.heroSection{
+    /* display: flex; */
+    height: 320px;
+    /* background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%) ; */
+    background-image: url("/static/img/welcome_1.png") ,linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
+    background-repeat: no-repeat, no-repeat;
+    background-position: 80% bottom;
+    background-size: contain;
+}
+.heroContainer{
+    max-width: 1200px;
+    height: auto;
+    margin: 0px auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* z-index: 0; */
+    
+}
+h1{
+    /* width: 1200px; */
+    padding-top:85px;
+    padding-bottom: 15px;
+    text-align: left;
+    font-family: Noto Sans TC;
+    font-weight: bold;
+    font-size: 28px;
+    color: #F8F8F8;
+    text-shadow: 0px 0px 30px #AABBCC;
+}
+h2{
+    text-align: left;
+    padding-bottom:25px ;
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    /* display: flex; */
+    color: #F8F8F8;
+    /* z-index: 0; */
+}
+.searchAttraction{
+    width: 400px;
+    height: 46px;
+    border-radius: 4px 0 0 4px;
+    border:0 none;
+    padding:0px;
+    background: #FFFFFF;
+    position: relative;
+    /* z-index: 0; */
+    
+}
+.searchBox{
+    /* position: relative; */
+    width: 60px;
+    height: 46px;
+    /* left:400px; */
+    background: #448899;
+    box-sizing:border-box;
+    border:0;
+    border-radius: 0 4px 4px 0;
+}
+.searchboxContainer{
+    height:46px;
+    display:flex;
+
+}
+::placeholder{
+    color:#757575;
+    padding:15px;
+    font-size: 16px;
+    height: 46px; /*沒辦法上下置中*/
+}
+
+/* content */
+.content{
+    width:1200px;
+    display:flex;
+    flex-wrap:wrap;
+    margin:auto;
+    margin-top: 50px;
+	justify-content:center; 
+}
+.box{
+    margin:15px;
+    height: 242px;
+    border: 1px solid #E8E8E8;
+    border-radius: 6px 6px 6px 6px;
+}
+.imgContainer{
+    width: 100%;
+    height: 0;
+    padding-bottom: 60%;
+    overflow: hidden;
+}
+.contentImg{
+    /* width:270px;
+    height:162px; */
+    width:100%;
+    border-radius: 4px 4px 0 0;
+}
+.attractionName{
+    padding:10px;
+    font-weight: bold;
+}
+.textcontainer{
+    display: flex;
+    justify-content: space-between;
+    color: #757575;
+}
+.attractionMrt{
+    width:125px;
+    height: 20px;
+    padding-left:10px; 
+}
+.attractionCategory{
+    width:125px;
+    height: 20px;
+    padding-right:10px;
+    text-align:right; 
+}
+/* footer */
+footer{
+    margin-top:10px;
+    height:104px;
+    background-color: #757575;
+}
+.copyright{
+    text-align: center;
+    color:#FFFFFF;
+    padding-top: 45px;
+    padding-bottom: 45px;
+}
+
+/* media query RWD響應式設計*/
+
+@media screen and (max-width:1920px) and (min-width: 1200px){
+     /*nav & herosection*/
+    /* content*/
+    .content{
+        max-width:1200px;
+        margin:0 auto;
+    }
+    .content>.box{
+        width:calc((100% - 15px *8) / 4);
+    }
+}
+
+@media screen and (min-width: 600px)  and (max-width:1199px){
+    /* content*/
+    .content{
+        max-width: 100%;
+    }
+    .content>.box{
+        width:calc((100% - 15px *4) / 2);
+    }
+    .box{
+        width: 45%;
+        height:auto;
+    } 
+}
+
+@media only screen and (max-width:599px){
+    /*nav & herosection*/
+    .navContainer{
+        max-width:100%;
+    }
+    .heroContainer{
+        justify-content: center;
+    }
+    .searchAttraction{
+        width:230px;
+    }
+    
+    /* content*/
+    .content{
+        max-width: 100%;
+    }
+    .content>.box{
+        width:95%; 
+    }
+    .box{
+        width: 100%;
+        height:auto;
+    } 
+}
