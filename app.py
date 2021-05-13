@@ -112,5 +112,6 @@ def api_attraction(attractionId):
 	except Error as e:
 		return jsonify({"error": True,"message":"伺服器錯誤"})	
 	connection.close()
-app.run(port=3000)
-# app.run(host="0.0.0.0", port=3000, debug= True)
+
+# app.run(port=3000)
+app.run(port=3000, host="0.0.0.0" ,debug= True)

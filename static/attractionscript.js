@@ -18,6 +18,7 @@ fetch("/api/attraction/"+spotId, {method:"get"}).then(function(response){
     let spotTransport = data["data"]["transport"]
     appendData(image,spotName,spotCategory,spotMrt,spotDescription,spotAddress,spotTransport);
 })
+btn_check_dayTime();
 
 function appendData(image,spotName,spotCategory,spotMrt,spotDescription,spotAddress,spotTransport){
     const img = document.getElementById("contentImg");
@@ -48,10 +49,20 @@ function appendData(image,spotName,spotCategory,spotMrt,spotDescription,spotAddr
     transport.appendChild(transportString);
 }
 
-// function btn_click_dayTime{
-
-
-// }
+function btn_check_dayTime(){
+    const btn_morning = document.querySelector('.morning_btn');
+    const btn_afternoon = document.querySelector('.afternoon_btn');
+    if (btn_morning.checked){
+        let ntd = document.getElementById("NTD");
+        let ntdString = document.createTextNode("新台幣2000元");
+        ntd.appendChild(ntdString);
+    }
+    if(btn_afternoon.checked){
+        let ntd = document.getElementById("NTD");
+        let ntdString = document.createTextNode("新台幣2500元");
+        ntd.appendChild(ntdString);
+    }
+}
 // fetch("/api/attraction/"+pathId, {method:"get"}).then(function(response){
 //     return response.json()
 // }).then(function getAttractions(obj){
