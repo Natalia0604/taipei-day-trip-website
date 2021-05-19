@@ -18,7 +18,21 @@
         </nav>
         <div class="content">
             <div class="sectionContainer">
-                <div class="imageContainer"><img class="contentImg" id="contentImg"></div>
+                <div class="imageContainer" id="imageContainer">
+                    <div class="imageSlide" id="imageSlide">
+                        <!-- <img class="image" id="image"> -->
+                        <!-- <div class="prev" onclick="plusSlides(-1)"><p class="arrowicon">←</p></div>
+                        <div class="next" onclick="plusSlides(1)"><p class="arrowicon">→</p></div> -->
+                        <div class="prev" onclick="plusSlides(-1)">
+                            <img src="/static/img/btn_leftArrow.png">
+                        </div>
+                        <div class="next" onclick="plusSlides(1)">
+                            <img src="/static/img/btn_rightArrow.png">
+                        </div>
+                        <div class="dotGroup" id="dotGroup"></div>
+                    </div>
+                </div>
+                
                 <div class="profile">
                     <h1 class="name" id="name"></h1>
                     <div class="categoryMrt">
@@ -29,15 +43,25 @@
                     <div class="resevation">
                         <h2>訂購導覽行程</h2>
                         <h3>以此景點為中心的一日行程，帶您探索城市角落故事</h3>
-                        <div>
-                            <span class="textbold">選擇日期:</span>
+                        <div class="bookingDate"> 
+                            <span class="resevation_textbold">選擇日期:</span>
                             <input id="date" type="date">
                         </div>
-                        <div><span class="textbold">選擇時間:</span> 
-                            <input class="morning_btn" type="radio" name="dayTime" id="morning" value="morning" > <span>上半天</span>
-                            <input class="afternoon_btn" type="radio" name="dayTime" id="afternoon" value="afternoon"> <span>下半天</span>
+                        <div class="bookingTime">
+                            <span class="resevation_textbold">選擇時間:</span> 
+                            <input class="morning_btn" id="morning_btn" type="radio" name="dayTime" checked> 
+                            <label for="morning_btn">
+                                <span class="radio_btn_word "></span>上半天
+                            </label>
+                            <input class="afternoon_btn" id="afternoon_btn" type="radio" name="dayTime">
+                            <label for="afternoon_btn">
+                                <span class="radio_btn_word "></span>下半天
+                            </label>
+                        </div> 
+                        <div class="bookingPrice">
+                            <span class="resevation_textbold">導覽費用:</span> 
+                            <span id="NTD">新台幣2000元</span>
                         </div>
-                        <div><span class="textbold">導覽費用:</span><span id="NTD"></span></div>
                         <button class="btn_booking">開始預訂行程</button>
                     </div>
                 </div>
@@ -45,11 +69,13 @@
             <hr>
             <div class="infors">
                 <div class="description" id="description"></div>
-                <div class="address" id="address">
-                    <h2>景點地址:</h2>
+                <div>
+                    <h4>景點地址:</h4>
+                    <div class="address" id="address"></div>
                 </div>
-                <div class="transport" id="transport">
-                    <h2>交通方式:</h2>
+                <div>
+                    <h4>交通方式:</h4>
+                    <div class="transport" id="transport"></div>
                 </div>
             </div>
         </div>

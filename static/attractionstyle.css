@@ -48,15 +48,17 @@ blockquote, q {
 
 *{
     box-sizing:border-box;
+    color:#666666;
 }
 
-/*navigaterbar*/
+/*--------------------------------------------------navigaterbar------------------------------------------------*/
 .header{
     background-color: #ffffff;
     height: 54px;
     top:0;
     position: sticky;
-    border-bottom: 1px solid #E8E8E8;    
+    border-bottom: 1px solid #E8E8E8; 
+    z-index: 10;   
 }
 .navContainer{
     display:flex;
@@ -66,8 +68,6 @@ blockquote, q {
     margin:0px auto;
     padding-left: 10px;
     padding-right: 10px;
-  
-    
 }
 /*文字:台北一日遊*/
 .taipeiDayTrip{
@@ -83,7 +83,6 @@ blockquote, q {
 li{
     font-family: "NotoSansCJKtc-Regular";
     font-size: 16px;
-    color: #666666;
     list-style-type: none;
     float: left;
     padding-right: 8px;
@@ -94,37 +93,106 @@ li:hover{
 }
 a{
     text-decoration: none;
-    color:#666666;
     line-height: 54px;
 }
-/* content */
+
+/*--------------------------------------------------------- content -------------------------------------------------*/
 .content{
     width:1200px;
     margin:auto;
     /* background-color: aqua; */
 }
-/*圖片及右半邊的字*/
+/*_____________________圖片及右半邊的字____________________________________*/
 .sectionContainer{
     display: flex;
     flex-wrap: wrap;
     margin-top: 37px;
     margin-bottom: 37px;
-    /* background-color: brown; */
 }
-.contentImg{
+/*圖片 & 箭頭 & 圓點*/
+.imageContainer{
     width:540px;
     height:406px;
-    margin-left:5px;
-    margin-right: 15px;
+    margin:0;
     border-radius: 4px 4px 4px 4px;
+    position: relative;
+    overflow: hidden;
 }
+.imageSlide{
+    width: 540px;
+    height: 406px;
+    position: relative;
+    margin: auto;
+}
+.mySlides{
+    display: none;
+    width:100%;
+}
+img{
+    position: absolute;
+    object-fit: cover;
+    object-position: center center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+/* 下一張 & 上一張 按鈕 */
+.prev,
+.next {
+    width:36px;
+    height: 36px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    opacity: 0.8;
+    z-index: 1;
+    background-color: #ffffff;
+    border-radius: 50%;  
+}
+.prev{
+    left:10px;
+}
+.next {
+    right: 10px;
+}
+
+.prev:hover, .next:hover {
+    opacity: 1.0;
+}
+
+/* 底部小原點 */
+.dot {
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    margin: 0 6px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+.active, .dot:hover {
+    background-color: #000;
+    border: 1px solid #ffffff;
+}
+.dotGroup{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+/*___________________________右半邊的文字_________________________________*/
 .profile{
     width:600px;
     margin-left:15px;
     margin-right:5px;
 }
 .name{
-    color:#666666;
     font-family: 'Times New Roman', Times, serif;
     font-size: 24px;
     font-weight: bold;
@@ -147,29 +215,27 @@ a{
     border-radius: 5px;
 }
 h2{
-    color:#666666;
     font-size: 16px;
     font-weight: bold;
     padding-bottom: 15px;
 }
 h3{
-    color:#666666;
     padding-bottom: 15px;
 }
-span{
-    color:#666666;
+h4{
+    height: 32px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     font-size: 16px; 
+    font-weight: bold;
 }
-.textbold{
-    color:#666666;
+.resevation_textbold{
+    font-size: 16px; 
     font-weight: bold;
     padding-right: 5px;
 }
-.radio_btn{
-    width:18px;
-    height:18px;
-    background-color: #448899;/*圈圈顏色*/
-    margin-bottom: 23px;
+.bookingTime{
+    padding-bottom: 15px;
 }
 .btn_booking{
     width:154px;
@@ -189,6 +255,36 @@ span{
     margin-bottom: 15px;
     border: 0;
 }
+/* --------------------------------------radioButton------------------------------------------------*/
+
+input[type="radio"] { 
+    display: none;
+} /*把原本的醜圈圈藏起來*/
+
+label {  
+    font-size: 14px; 
+}
+
+.radio_btn_word{ 
+    display: inline-block; 
+    width: 22px; 
+    height: 22px;
+    margin: 2px 5px 10px 2px; 
+    vertical-align: middle; 
+    -moz-border-radius: 50%; 
+    border-radius: 50%; /*調成圓形*/
+    border: 2px solid #ffffff; /*外面的白圓框框*/ 
+    background-color: #ffffff; /*底層白色塗滿 */
+} 
+
+input:checked + label { 
+    font-weight: bold; 
+}  /*被點擊後的字型設定*/
+input:checked + label .radio_btn_word{
+    background-color: #448899; 
+    border: 2px solid #ffffff; 
+    box-shadow: 2px 2px 2px rgba(0,0,0,.1); 
+}
 
 /*下半部的字*/
 .infors{
@@ -201,18 +297,25 @@ span{
     flex-wrap:wrap;
     height:auto;
     padding-top: 50px;
+    padding-bottom: 20px;
+    line-height: 23px;
+    letter-spacing: 3px;
+    
 }
 .address{
     display: flex;
     flex-wrap:wrap;
-    padding-top: 20px;
+    letter-spacing: 3px;
+    line-height: 23px;
+    padding-bottom: 20px;
 }
 .transport{
     display: flex;
     flex-wrap:wrap;
-    padding-top: 20px;
+    line-height: 23px;
+    letter-spacing: 3px;
 }
-/* footer */
+/* ---------------------------------------------------------footer------------------------------------------------ */
 footer{
     margin-top:10px;
     height:104px;
@@ -234,9 +337,6 @@ footer{
     .sectionContainer{
         max-width: 100%;
     }
-    .sectionContainer> .contentImg{
-        width: 95%;
-    } 
     .sectionContainer>.profile{
         width: 90%;
         padding-top: 20px;
@@ -250,6 +350,17 @@ footer{
         padding-left: 10px;
         width:95%;
     }
+    .imageSlide{
+        width:100%;
+    }
+    .imageContainer{
+        margin:auto;
+        width:90%;
+    }
+    img{
+        width: 100%;
+    }
+
 }
 
 @media only screen and (max-width:360px){
@@ -259,17 +370,22 @@ footer{
     } 
     .content{
         max-width: 100%;
-        /* margin:auto; */
     }
     .profile{
         padding-top: 20px;
         margin:auto;
         width: 100%;
     }
-    .contentImg{
+    .resevation{
         width: 100%;
     }
-    .resevation{
+    .imageContainer{
+        width: 100%;
+    }
+    .imageSlide{
+        width:100%;
+    }
+    img{
         width: 100%;
     }
 }

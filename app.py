@@ -5,6 +5,8 @@ from mysql.connector import Error
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
+app.config["DEBUG"] = True #顯示錯誤訊息
+app.secret_key= "somesecretkeythatonlyishouldknow"
 
 # Pages
 @app.route("/")
@@ -80,7 +82,7 @@ def api_attractions():
 def api_attraction(attractionId):
 	try:
 		#主機名稱、帳號、密碼、選擇的資料庫
-		connection = mysql.connector.connect(host="localhost",user="root",password="0604",database="travel_spot")
+		connection = mysql.connector.connect(host="localhost",user="root",password="nataliaSQL12345!",database="travel_spot")
 	except Error as e:
 		print("資料庫連接失敗: ", e)
 	mycursor = connection.cursor()
@@ -112,6 +114,27 @@ def api_attraction(attractionId):
 	except Error as e:
 		return jsonify({"error": True,"message":"伺服器錯誤"})	
 	connection.close()
+
+# @app.route("api/user",methods=["PATCH"])
+# def signin():
+# 	# 確認使用GET方法連線
+# 	if request.method =="GET":
+# 		#接收前端登入資料
+# 		userEmail=request.form["email"]
+#         userPw=request.form["pw"]
+# 		#查詢user資料表中的資料
+#         mycursor = connection.cursor()
+#         mycursor.execute("SELECT email,password FROM user WHERE email= (%s) AND password = (%s)",(userEmail,userPw))
+#         myuserdata = mycursor.fetchall()
+# 		#檢查是否有對應的email、密碼
+#         #有→將email加入session，導向會員頁 ， 無→導向失敗頁(帳號或密碼錯誤)
+#         if (userEmail,userPw) in myuserdata:   
+#             session["user_email"] = userEmail #會存在cookies
+#             return redirect("/")
+#         else:
+# 			message = request.args.get("message","登入失敗")
+#             return redirect("/",wrongMessage=message)
+
 
 # app.run(port=3000)
 app.run(port=3000, host="0.0.0.0" ,debug= True)
