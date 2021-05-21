@@ -115,26 +115,74 @@ def api_attraction(attractionId):
 		return jsonify({"error": True,"message":"伺服器錯誤"})	
 	connection.close()
 
-# @app.route("api/user",methods=["PATCH"])
-# def signin():
-# 	# 確認使用GET方法連線
-# 	if request.method =="GET":
-# 		#接收前端登入資料
-# 		userEmail=request.form["email"]
-#         userPw=request.form["pw"]
-# 		#查詢user資料表中的資料
-#         mycursor = connection.cursor()
-#         mycursor.execute("SELECT email,password FROM user WHERE email= (%s) AND password = (%s)",(userEmail,userPw))
-#         myuserdata = mycursor.fetchall()
-# 		#檢查是否有對應的email、密碼
-#         #有→將email加入session，導向會員頁 ， 無→導向失敗頁(帳號或密碼錯誤)
-#         if (userEmail,userPw) in myuserdata:   
-#             session["user_email"] = userEmail #會存在cookies
-#             return redirect("/")
-#         else:
-# 			message = request.args.get("message","登入失敗")
-#             return redirect("/",wrongMessage=message)
+#會員系統
+# @app.route("api/user",methods=["GET","POST","PATCH","DELETE"])
+# def member():
+# 	#連接MYSQL資料庫
+# 	try:
+# 		#主機名稱、帳號、密碼、選擇的資料庫
+# 		connection = mysql.connector.connect(host="localhost",user="root",password="nataliaSQL12345!",database="travel_spot")
+# 	except Error as e:
+# 		print("資料庫連接失敗: ", e)
+# 	try:
+# 		if request.method == "POST": #註冊
+# 			#接收前端註冊資料
+# 			signupName = request.form["name"]
+# 			signupEmail = request.form["email"]
+# 			signupPassword = request.form["password"]
+# 			#查詢member資料表中的資料
+# 			mycursor = connection.cursor()
+# 			mycursor.execute("SELECT email FROM member WHERE email = (%s)",(signupEmail,))
+# 			#取回全部的資料
+# 			data = mycursor.fetchall()
+# 			#檢查member資料表是否有重複的帳號: 
+# 			# 重複→帳號已經被註冊， 無重複→新增到資料表，註冊成功
+# 			if (signupEmail,) in data:
+# 				return jsonify({"error": True,"message": "註冊失敗，Email已經被註冊過囉!"}),400
+# 			else:
+# 				newData = "INSERT INTO member (name,email,password) VALUES (%s,%s,%s)"
+# 				newValues = (signupName, signupEmail,signupPassword)
+# 				mycursor.execute(newData, newValues)
+# 				connection.commit()
+# 				return jsonify({"ok":True,"message":"註冊成功"}),200
+# 		elif request.method == "PATCH": #登入
+# 			#接收前端登入資料
+# 			loginEmail = request.form["email"]
+# 			loginPassword = request.form["password"]
+# 			#查詢member資料表中的資料
+# 			mycursor = connection.cursor()
+# 			mycursor.execute("SELECT email,password FROM member WHERE email= (%s) AND password = (%s)",(loginEmail,loginPassword))
+# 			data = mycursor.fetchall()
+# 			#檢查是否有對應的帳號、密碼
+# 			#有→將name加入session ， 無→帳號或密碼錯誤
+# 			if (loginEmail,loginPassword) in mydata:   
+# 				session["email"] = loginEmail #會存在cookies
+# 				data={
+# 					"email":data[2],
+# 					"password":data[3]
+# 				}
+# 				return jsonify(data),200
+# 			else:
+# 				return jsonify({"error":True,"message":"登入失敗，Eamil或密碼輸入錯誤"}),400
+# 		elif request.method == "DELETE": #登出
+# 			session.pop('email', None) #登出時一併消除儲存在cookies的資料
+# 			return jsonify({"ok":True, "message":"登出成功"}),200
+# 		elif request.method =="GET": #是否為登入狀態
+# 			stillLogin = session.get("email")
+# 			if stillLogin != None:
+# 				data={
+# 					"data":{
+# 					"id"= data[0],
+# 					"name"= data[1],
+# 					"email"= data[2]
+# 					}
+# 				}
+# 				return jsonify(data),200
+# 			else:
+# 				return jsonify({"error":"null"})	
+#     except:
+#         return jsonify({"error":True,"message":"伺服器錯誤"}),500
+# 	connection.close()
 
-
-# app.run(port=3000)
-app.run(port=3000, host="0.0.0.0" ,debug= True)
+app.run(port=3000)
+# app.run(port=3000, host="0.0.0.0" ,debug= True)

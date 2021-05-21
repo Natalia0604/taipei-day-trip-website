@@ -1,7 +1,9 @@
+//搜尋框，刪除前面搜尋的舊資料
 function search(){
     document.getElementById("content").innerHTML = "";
     getData();
 }
+//跑資料
 function getData(Page=0){
     sessionStorage.setItem("loading",true);
     let keyword=document.getElementById("keyword").value;
@@ -74,8 +76,32 @@ function getData(Page=0){
     }
     req.send(null);
 }
+getData();
 
+// 會員登入註冊 彈跳視窗
+var loginBox;
+var signupBox;
+window.onload = function(){
+    loginBox = document.getElementById("loginBox"); 
+}
+function showLoginBox(){
+    loginBox.style.display="block";
+}
+function closeLoginBox(){
+    loginBox.style.display="none";
+}
 
+window.onload = function(){
+    signupBox = document.getElementsByClassName("signupBox");
+}
+function showSignupBox(){
+    signupBox.style.display ="block";
+}
+function closeSignupBox(){
+    signupBox.style.display = "none";
+}
+
+// 滾動式卷軸
 function fetchData() {
     let triggerDistance = 10;
     let footerNode = document.getElementById("footer");
