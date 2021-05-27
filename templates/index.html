@@ -4,18 +4,49 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
         <title>台北一日遊index</title>
-        <link href="static/indexstyle.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="/static/css/indexstyle.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="/static/css/userstyle.css" rel="stylesheet" type="text/css" media="all"/>
     </head>
-    <body onload="getData()">
+    <body>
         <nav class="header">
             <div class="navContainer">
                 <div class="taipeiDayTrip">台北一日遊</div>
                 <ul class="menu">
                     <li><a href="#">預定行程</a></li>
-                    <li><a href="#">登入/註冊</a></li>
+                    <li><a class="btn_member" id="btn_member" href="#" onclick="showLoginBox();">登入/註冊</a></li>
+                    <li><a class="btn_logout" id="btn_logout" onclick="logout();">登出系統</a></li>
                 </ul>
             </div>
         </nav>
+        <div class="loginBox" id="loginBox">
+            <div class="decoratorBar"></div>
+            <form action="/api/user",method="PATCH">
+                <div class="close" id="closeLoginBox" onclick="closeLoginBox();">
+                    <img src="/static/img/icon_close.png">
+                </div>
+                <h3 class="loginTitle">登入會員帳號</h3>
+                <input type="text" class="loginEmail" id="loginEmail" name="loginEmail" placeholder="輸入電子信箱">
+                <input type="password" class="loginPassword" id="loginPassword" name="loginPassword" placeholder="輸入密碼" >
+                <button class="btn_login" type="button" onclick="login();">登入帳戶</button>
+                <div class="loginMessage" id="loginMessage"></div>
+                <h4 class="signupURL" onclick="showSignupBox();">還沒有登入帳戶?點此註冊</h4>
+            </form>
+        </div>
+        <div class="signupBox" id="signupBox">
+            <div class="decoratorBar"></div>
+            <form action="/api/user",method="POST">
+                <div class="close" id="closeSignupBox" onclick="closeSignupBox();">
+                    <img src="/static/img/icon_close.png">
+                </div>
+                <h3 class="signupTitle">註冊會員帳號</h3>
+                <input type="text" class="signupName" id="signupName" name="signupName" placeholder="輸入姓名">
+                <input type="text" class="signupEmail" id="signupEmail" name="signupEmail" placeholder="輸入電子信箱">
+                <input type="password" class="signupPassword" id="signupPassword" name="signupPassword" placeholder="輸入密碼">
+                <button class="btn_login" type="button" onclick="signup();">註冊帳戶</button>
+                <div class="signupMessage" id="signupMessage"></div>
+                <h4 class="loginURL" onclick="showLoginBox();">已經有帳戶了?點此登入</h4>
+            </form>
+        </div>
         <div class="heroSection">
             <div class="heroContainer">
                 <h1>輕鬆享受台北一日悠閒</h1>
@@ -40,6 +71,7 @@
         <footer id="footer">
             <div class="copyright">COPYRIGHT © 2021 台北一日遊</div>
         </footer>
-        <script type="text/javascript" src="static/indexscript.js"></script>
+        <script type="text/javascript" src="static/js/indexscript.js"></script>
+        <script type="text/javascript" src="static/js/user.js"></script>
     </body>
 </html>

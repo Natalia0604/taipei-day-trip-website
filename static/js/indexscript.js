@@ -1,7 +1,9 @@
+//搜尋框，刪除前面搜尋的舊資料
 function search(){
     document.getElementById("content").innerHTML = "";
     getData();
 }
+//跑資料
 function getData(Page=0){
     sessionStorage.setItem("loading",true);
     let keyword=document.getElementById("keyword").value;
@@ -18,9 +20,7 @@ function getData(Page=0){
         let nextPage = JSON.parse(req.responseText)["nextPage"];
         sessionStorage.setItem("nextPage", nextPage);
         let myData = JSON.parse(req.responseText)["data"];
-        // console.log(myData); //
         if (myData.length != 0){
-            console.log("OK");
             for(let i=0 ; i < myData.length ; i++){
                 let content = document.querySelector(".content");
                 let box = document.createElement("div"); //建立一個div
@@ -69,13 +69,35 @@ function getData(Page=0){
         else{
             let emptyResult = document.createTextNode("查無結果");
             content.appendChild(emptyResult);
-            // console.log("查無結果"); //
         }
     }
     req.send(null);
 }
+getData();
 
+// // 會員登入註冊 彈跳視窗
+// function showLoginBox(){
+//     let loginBox = document.getElementById("loginBox");
+//     let signupBox = document.getElementById("signupBox");
+//     loginBox.style.display="block";
+//     signupBox.style.display ="none";
+// }
+// function showSignupBox(){
+//     let signupBox = document.getElementById("signupBox");
+//     let loginBox = document.getElementById("loginBox");
+//     loginBox.style.display="none";
+//     signupBox.style.display ="block";
+// }
+// document.getElementById("closeLoginBox").onclick=function(){
+//     let loginBox = document.getElementById("loginBox");
+//     loginBox.style.display="none";
+// }
+// document.getElementById("closeSignupBox").onclick=function(){
+//     let signupBox = document.getElementById("signupBox");
+//     signupBox.style.display="none";
+// }
 
+// 滾動式卷軸
 function fetchData() {
     let triggerDistance = 10;
     let footerNode = document.getElementById("footer");
@@ -83,7 +105,6 @@ function fetchData() {
     if (distance < triggerDistance) {
         let nextPage = sessionStorage.getItem("nextPage");
         let loading = sessionStorage.getItem("loading"); 
-        // console.log(loading); //
         if (nextPage != "null"){
             if (loading === "false"){
                 getData(page=nextPage);

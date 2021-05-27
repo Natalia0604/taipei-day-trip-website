@@ -89,13 +89,16 @@ li{
     padding-left: 8px;
 }
 li:hover{
-    background-color:pink;
+    font-weight: bold;
 }
 a{
     text-decoration: none;
     line-height: 54px;
 }
-
+.btn_logout{
+    display:none;
+    cursor: pointer;
+}
 /*--------------------------------------------------------- content -------------------------------------------------*/
 .content{
     width:1200px;
@@ -219,7 +222,7 @@ h2{
     font-weight: bold;
     padding-bottom: 15px;
 }
-h3{
+.bookingIntro{
     padding-bottom: 15px;
 }
 h4{

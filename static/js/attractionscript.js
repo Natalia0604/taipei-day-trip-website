@@ -83,7 +83,6 @@ function showSlides(n) {
 }
 
 function appendImages(image){
-    console.log(image.length);
     for (let i=0; i<image.length; i++){
         let mySlides = document.createElement("div");
         let img = document.createElement("img");
@@ -97,7 +96,6 @@ function appendImages(image){
 }
 
 function appendDot(image){
-    console.log(image.length);
     for (let i=0; i<image.length; i++){
         let dot = document.createElement("span");
         dot.setAttribute("class", "dot");
@@ -105,85 +103,6 @@ function appendDot(image){
         document.getElementById("dotGroup").appendChild(dot);
     };
 }
-
-
-
-
-
-
-// let image_Slide;
-// let imageSlideImg ; //改抓外框框的寬度
-// //counter
-// let counter = 1;
-// let size;
-// console.log(imageSlideImg);
-
-// function appendImages(image){
-//     //增加最後一張照片到第一個位置
-//     const imgfirst =document.createElement("img");
-//     imgfirst.setAttribute("src",image[image.length-1]);
-//     imgfirst.setAttribute("id","lastClone");
-//     imgfirst.setAttribute("class","image");
-//     document.getElementById("imageSlide").appendChild(imgfirst);
-//     //跑出所有的圖片
-//     for (let i=0; i<image.length; i++){
-//         const img = document.createElement("img");
-//         img.setAttribute("src",image[i]);
-//         img.setAttribute("class","image");
-//         document.getElementById("imageSlide").appendChild(img);
-//     }
-//     //增加第一張照片到最後一個位置
-//     const imglast =document.createElement("img");
-//     imglast.setAttribute("src",image[0]);
-//     imglast.setAttribute("id","firstClone");
-//     imglast.setAttribute("class","image");
-//     document.getElementById("imageSlide").appendChild(imglast);
-//     //
-//     image_Slide = document.querySelector(".imageSlide");
-//     imageSlideImg =document.querySelectorAll(".imageSlide img"); //只要是img的都被圈選
-//     size = document.querySelector("#imageContainer").clientWidth + 2; //抓圖片的寬度
-//     image_Slide.style.transform = "translateX("+(-size *counter)+"px)" //移動幾個圖片的寬度
-//     image_Slide.addEventListener("transitionend",function(){
-//         if (imageSlideImg[counter].id === "lastClone"){
-//             image_Slide.style.transition = "none"; //不要有轉場的效果出現
-//             counter = imageSlideImg.length + 2;
-//             image_Slide.style.transform = "translateX("+(-size *counter)+"px)" ;
-//         }
-//         if (imageSlideImg[counter].id === "firstClone"){
-//             image_Slide.style.transition = "none"; //不要有轉場的效果出現
-//             counter = imageSlideImg.length - counter;
-//             image_Slide.style.transform = "translateX("+(-size *counter)+"px)" ;
-//         }
-//     })
-//     //button Listeners
-//     preBtn.addEventListener("click",function(){
-//         if(counter <= 0) return;
-//             image_Slide.style.transition = "transform 0.4s ease-in-out";
-//             counter--; //按了幾次Pre
-//             image_Slide.style.transform = "translateX("+(-size *counter)+"px)" //讓照片往右滑
-//             // console.log(counter);
-//     })
-//     nextBtn.addEventListener("click",function(){
-//         console.log(counter)
-//         if (counter >= imageSlideImg.length - 1) return
-
-//         console.log(image_Slide)
-//         image_Slide.style.transition = "transform 0.4s ease-in-out";
-//         counter++; //按了幾次Next
-//         console.log("translateX("+(-size *counter)+"px)")
-//         image_Slide.style.transform = "translateX("+(-size *counter)+"px)" //讓照片往左滑
-//             // console.log(counter);
-//     })
-// }
-
-// //button 
-// const preBtn = document.querySelector("#pre_btn");
-// const nextBtn = document.querySelector("#next_btn");
-
-
-
-
-
 
 //------------------------------------------------時段選擇---------------------------------------------------------------
 

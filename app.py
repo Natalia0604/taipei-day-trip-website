@@ -5,7 +5,7 @@ from mysql.connector import Error
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
-app.config["DEBUG"] = True #顯示錯誤訊息
+# app.config["DEBUG"] = True #顯示錯誤訊息
 app.secret_key= "somesecretkeythatonlyishouldknow"
 
 # Pages
@@ -115,26 +115,107 @@ def api_attraction(attractionId):
 		return jsonify({"error": True,"message":"伺服器錯誤"})	
 	connection.close()
 
-# @app.route("api/user",methods=["PATCH"])
-# def signin():
-# 	# 確認使用GET方法連線
-# 	if request.method =="GET":
-# 		#接收前端登入資料
-# 		userEmail=request.form["email"]
-#         userPw=request.form["pw"]
-# 		#查詢user資料表中的資料
-#         mycursor = connection.cursor()
-#         mycursor.execute("SELECT email,password FROM user WHERE email= (%s) AND password = (%s)",(userEmail,userPw))
-#         myuserdata = mycursor.fetchall()
-# 		#檢查是否有對應的email、密碼
-#         #有→將email加入session，導向會員頁 ， 無→導向失敗頁(帳號或密碼錯誤)
-#         if (userEmail,userPw) in myuserdata:   
-#             session["user_email"] = userEmail #會存在cookies
-#             return redirect("/")
-#         else:
-# 			message = request.args.get("message","登入失敗")
-#             return redirect("/",wrongMessage=message)
 
+#會員系統
+#註冊
+@app.route('/api/user',methods=['POST'])
+def signup():
+	#AJAX傳值給API	
+	insertValues = request.get_json()
+	print(insertValues)
+	signupName =insertValues['name']
+	signupEmail = insertValues['email']
+	signupPassword = insertValues['password']	
+	print(signupName,signupEmail,signupPassword)
+	try:
+		#主機名稱、帳號、密碼、選擇的資料庫
+		connection = mysql.connector.connect(host="localhost",user="root",password="nataliaSQL12345!",database="travel_spot")
+	except Error as e:
+		print("資料庫連接失敗: ", e)
+	if request.method == "POST": 
+		mycursor = connection.cursor()
+		mycursor.execute("SELECT email FROM member WHERE email = (%s)",(signupEmail,))
+		mydata = mycursor.fetchall() #取回全部的資料
+		#檢查member資料表是否有重複的帳號: 
+		# 重複→帳號已經被註冊， 無重複→新增到資料表，註冊成功
+		if (signupEmail,) in mydata:
+			return Response(json.dumps({"error": True,"message": "註冊失敗，Email已經被註冊過囉!"}),mimetype="application/json"),400
+		else:
+			newData = "INSERT INTO member (name,email,password) VALUES (%s,%s,%s)"
+			newValues = (signupName, signupEmail,signupPassword)
+			mycursor.execute(newData, newValues)
+			connection.commit()
+			return Response(json.dumps({"ok":True,"message": "註冊成功"}),mimetype="application/json"),200
+	else:
+		return Response(json.dumps({"error":True,"message":"伺服器錯誤"}),mimetype="application/json"),500
+	connection.close()
 
-# app.run(port=3000)
-app.run(port=3000, host="0.0.0.0" ,debug= True)
+#登入
+@app.route("/api/user",methods=["PATCH"])
+def login():
+	#AJAX傳值給API	
+	insertValues = request.get_json()
+	loginEmail = insertValues["email"]
+	loginPassword = insertValues["password"]
+	print(loginEmail,loginPassword)
+	try:
+		#主機名稱、帳號、密碼、選擇的資料庫
+		connection = mysql.connector.connect(host="localhost",user="root",password="nataliaSQL12345!",database="travel_spot")
+	except Error as e:
+		print("資料庫連接失敗: ", e)
+	if request.method == "PATCH": 
+		#查詢member資料表中的資料
+		mycursor = connection.cursor()
+		mycursor.execute("SELECT email,password FROM member WHERE email = (%s) AND password = (%s)",(loginEmail,loginPassword))
+		mydata = mycursor.fetchall() #取回全部的資料
+		#檢查是否有對應的帳號、密碼
+		#有→將name加入session ， 無→帳號或密碼錯誤
+		if (loginEmail,loginPassword) in mydata:   
+			session["email"] = loginEmail #會存在cookies
+			session.permanent = True #如果設置了session.permanent 為 True，那麽過期時間是31天
+			return Response(json.dumps({"ok":True,"message":"登入成功"}),mimetype="application/json"),200
+		else:
+			return Response(json.dumps({"error":True,"message":"登入失敗，Eamil或密碼輸入錯誤"}),mimetype="application/json"),400
+	else:
+		return Response(json.dumps({"error":True,"message":"伺服器錯誤"}),mimetype="application/json"),500
+	connection.close()
+	
+#會員狀態
+@app.route("/api/user",methods=["GET"])
+def userInfo():
+	try:
+		#主機名稱、帳號、密碼、選擇的資料庫
+		connection = mysql.connector.connect(host="localhost",user="root",password="nataliaSQL12345!",database="travel_spot")
+	except Error as e:
+		print("資料庫連接失敗: ", e)
+	if request.method == "GET":
+		stillLogin = session.get("email")
+		if stillLogin != None:
+			#查詢member資料表中的資料
+			mycursor = connection.cursor()
+			mycursor.execute("SELECT id,name,email FROM member WHERE email = (%s)",(stillLogin,))
+			mydata = mycursor.fetchall() #取回全部的資料
+			data={
+				"data":{
+				"id": mydata[0][0],
+				"name": mydata[0][1],
+				"email": mydata[0][2]
+				}
+			}
+			return Response(json.dumps(data),mimetype="application/json"),200
+		else:
+			return Response(json.dumps({"error":None,"message":"尚未登入"}),mimetype="application/json")
+	else:
+		return Response(json.dumps({"error":True,"message":"伺服器錯誤"}),mimetype="application/json"),500
+	connection.close()
+
+#登出
+@app.route("/api/user",methods=["DELETE"])
+def signout():
+	if request.method == "DELETE": #登出
+		session.pop('email', None) #登出時一併消除儲存在cookies的資料
+		return Response(json.dumps({"ok":True, "message":"登出成功"}),mimetype="application/json"),200
+
+# app.run(port=3000,debug= True)
+if __name__ == '__main__':
+	app.run(host="0.0.0.0", port=3000, debug=True)
