@@ -11,7 +11,7 @@ function signup(){
             "email": signemail,
             "password":signpassword
         };
-        const URL = 'http://127.0.0.1:3000/api/user';
+        const URL = '/api/user';
         fetch(URL,{
             method:"POST",
             headers:{
@@ -47,7 +47,7 @@ function login(){
             "email": loginEmail,
             "password": loginPassword
         };
-        const URL = 'http://127.0.0.1:3000/api/user';
+        const URL = '/api/user';
         fetch( URL,{
             method:"PATCH",
             headers:{
@@ -78,7 +78,7 @@ function login(){
 
 //檢查會員登入狀態 GET
 function loginCheck(){
-    const URL = 'http://127.0.0.1:3000/api/user';
+    const URL = '/api/user';
     fetch( URL,{
         method:"GET",
         headers:{
@@ -103,7 +103,7 @@ function loginCheck(){
 
 //登出 DELETE
 function logout(){
-    const URL = 'http://127.0.0.1:3000/api/user';
+    const URL = '/api/user';
     fetch(URL,{
         method:"DELETE",
         cache:"no-cache"
