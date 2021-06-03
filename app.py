@@ -115,7 +115,6 @@ def api_attraction(attractionId):
 		return jsonify({"error": True,"message":"伺服器錯誤"})	
 	connection.close()
 
-
 #會員系統
 #註冊
 @app.route('/api/user',methods=['POST'])
@@ -182,7 +181,7 @@ def login():
 	
 #會員狀態
 @app.route("/api/user",methods=["GET"])
-def userInfo():
+def userState():
 	try:
 		#主機名稱、帳號、密碼、選擇的資料庫
 		connection = mysql.connector.connect(host="localhost",user="root",password="nataliaSQL12345!",database="travel_spot")
@@ -204,7 +203,7 @@ def userInfo():
 			}
 			return Response(json.dumps(data),mimetype="application/json"),200
 		else:
-			return Response(json.dumps({"error":None,"message":"尚未登入"}),mimetype="application/json")
+			return Response(json.dumps({"error":None,"message":"尚未登入"}),mimetype="application/json"),403
 	else:
 		return Response(json.dumps({"error":True,"message":"伺服器錯誤"}),mimetype="application/json"),500
 	connection.close()
@@ -216,6 +215,98 @@ def signout():
 		session.pop('email', None) #登出時一併消除儲存在cookies的資料
 		return Response(json.dumps({"ok":True, "message":"登出成功"}),mimetype="application/json"),200
 
+#預定行程
+#建立新的預定行程
+@app.route("/api/booking",methods=['POST'])
+def newBooking():
+	#AJAX傳值給API
+	insertValues = request.get_json()
+	attractionId = insertValues["attractionId"]
+	date = insertValues["date"]
+	time = insertValues["time"]
+	price = insertValues["price"]
+	stillLogin = session.get("email")
+	if request.method == "POST":
+		if stillLogin != None: #檢查登入狀態
+			if (attractionId != None and date != None and time != None and price !=None):
+				session["attractionId"] = attractionId
+				session["date"] = date
+				session["time"] = time
+				session["price"] = price
+				print("session",session["attractionId"],session["date"],session["time"],session["price"])
+				return Response(json.dumps({"ok":True,"message":"建立成功"}),mimetype="application/json"),200
+			else:
+				return Response(json.dumps({"error":True,"message":"建立失敗，輸入不正確"}),mimetype="application/json"),400
+		else:
+			return Response(json.dumps({"error":True,"message":"未登入系統，拒絕存取"}),mimetype="application/json"),403
+	else:
+		return Response(json.dumps({"error":True,"message":"伺服器錯誤"}),mimetype="application/json"),500
+	connection.close()
+
+
+#取得尚未下單的預定行程
+@app.route("/api/booking",methods=["GET"])
+def bookingState():
+	try:
+		#主機名稱、帳號、密碼、選擇的資料庫
+		connection = mysql.connector.connect(host="localhost",user="root",password="nataliaSQL12345!",database="travel_spot")
+	except Error as e:
+		print("資料庫連接失敗: ", e)
+	if request.method == "GET":
+		stillLogin = session.get("email")
+		get_attractionId = session.get("attractionId")
+		get_date = session.get("date")
+		get_time = session.get("time")
+		get_price = session.get("price")
+		print("getSession",get_attractionId,get_date,get_time,get_price)
+		if stillLogin != None:
+			if (get_attractionId != None and get_date != None and get_time != None and get_price != None):
+				mycursor = connection.cursor()
+				mycursor.execute("SELECT id, name, address, images FROM attractions WHERE id =(%s)",(get_attractionId,)) 
+				getAttraction = mycursor.fetchall()
+				imageList =[]
+				for img in getAttraction[0][3].split(',')[:-1]:
+					imageList.append(img)
+				data ={	
+					"data":{
+						"attraction":{
+							"id":getAttraction[0][0],
+							"name":getAttraction[0][1],
+							"address":getAttraction[0][2],
+							"images":imageList[0]
+						},
+						"date":get_date,
+						"time":get_time,
+						"price":get_price
+					}
+				}
+				print(data)
+				return Response(json.dumps(data),mimetype="application/json"),200
+			else:
+				return Response(json.dumps({"error":None,"message":"目前沒有任何待預訂的行程"}),mimetype="application/json"),201
+		else:
+			return Response(json.dumps({"error":True,"message":"未登入系統，拒絕存取"}),mimetype="application/json"),403
+	else:
+		return Response(json.dumps({"error":True,"message":"伺服器錯誤"}),mimetype="application/json"),500
+	connection.close()
+
+#刪除目前的預定行程
+@app.route("/api/booking",methods=["DELETE"])
+def deleteBooking():
+	if request.method == "DELETE":
+		stillLogin = session.get("email")
+		if stillLogin != None:
+			session.pop('attractionId', None)
+			session.pop('date', None)
+			session.pop('time', None)
+			session.pop('price', None)
+			print("session pop", session.get("date"),session.get("time"))
+			return Response(json.dumps({"ok":True,"message":"刪除成功"}),mimetype ="application/json"),200
+		else:
+			return Response(json.dumps({"error":True,"message":"未登入系統，拒絕存取"}),mimetype="application/json"),403
+	else:
+		return Response(json.dumps({"error":True,"message":"伺服器錯誤"}),mimetype="application/json"),500
+	connection.close()	
+
 # app.run(port=3000,debug= True)
-if __name__ == '__main__':
-	app.run(host="0.0.0.0", port=3000, debug=True)
+app.run( host="0.0.0.0", port=3000,debug= True)	

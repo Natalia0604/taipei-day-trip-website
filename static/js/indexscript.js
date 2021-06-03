@@ -75,28 +75,6 @@ function getData(Page=0){
 }
 getData();
 
-// // 會員登入註冊 彈跳視窗
-// function showLoginBox(){
-//     let loginBox = document.getElementById("loginBox");
-//     let signupBox = document.getElementById("signupBox");
-//     loginBox.style.display="block";
-//     signupBox.style.display ="none";
-// }
-// function showSignupBox(){
-//     let signupBox = document.getElementById("signupBox");
-//     let loginBox = document.getElementById("loginBox");
-//     loginBox.style.display="none";
-//     signupBox.style.display ="block";
-// }
-// document.getElementById("closeLoginBox").onclick=function(){
-//     let loginBox = document.getElementById("loginBox");
-//     loginBox.style.display="none";
-// }
-// document.getElementById("closeSignupBox").onclick=function(){
-//     let signupBox = document.getElementById("signupBox");
-//     signupBox.style.display="none";
-// }
-
 // 滾動式卷軸
 function fetchData() {
     let triggerDistance = 10;

@@ -10,9 +10,9 @@
     <body>
         <nav class="header">
             <div class="navContainer">
-                <div class="taipeiDayTrip">台北一日遊</div>
+                <div class="taipeiDayTrip" id="taipeiDayTrip">台北一日遊</div>
                 <ul class="menu">
-                    <li><a href="#">預定行程</a></li>
+                    <li><a onclick="loginCheck_booking();">預定行程</a></li>
                     <li><a class="btn_member" id="btn_member" href="#" onclick="showLoginBox();">登入/註冊</a></li>
                     <li><a class="btn_logout" id="btn_logout" onclick="logout();">登出系統</a></li>
                 </ul>
@@ -80,20 +80,20 @@
                         </div>
                         <div class="bookingTime">
                             <span class="resevation_textbold">選擇時間:</span> 
-                            <input class="morning_btn" id="morning_btn" type="radio" name="dayTime" checked> 
+                            <input class="morning_btn" id="morning_btn" type="radio" name="dayTime" value="morning" checked> 
                             <label for="morning_btn">
                                 <span class="radio_btn_word "></span>上半天
                             </label>
-                            <input class="afternoon_btn" id="afternoon_btn" type="radio" name="dayTime">
+                            <input class="afternoon_btn" id="afternoon_btn" type="radio" name="dayTime" value="afternoon">
                             <label for="afternoon_btn">
                                 <span class="radio_btn_word "></span>下半天
                             </label>
                         </div> 
                         <div class="bookingPrice">
                             <span class="resevation_textbold">導覽費用:</span> 
-                            <span id="NTD">新台幣2000元</span>
+                            新台幣<span id="NTD">2000</span>元
                         </div>
-                        <button class="btn_booking">開始預訂行程</button>
+                        <button class="btn_booking" type="button" onclick="btn_booking();">開始預訂行程</button>
                     </div>
                 </div>
             </div>
@@ -115,5 +115,6 @@
         </footer>
         <script type="text/javascript" src="/static/js/attractionscript.js"></script>
         <script type="text/javascript" src="/static/js/user.js"></script>
+        <script type="text/javascript" src="/static/js/bookingscript.js"></script>
     </body>
 </html>
