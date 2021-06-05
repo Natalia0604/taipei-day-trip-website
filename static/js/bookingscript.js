@@ -1,3 +1,15 @@
+let attractionId;
+let attractionName;
+let attractionAddress;
+let attractionImage; 
+let date; 
+let time;
+let price; 
+let memberName;
+let memberEmail; 
+let phoneNumber;
+let prime;
+
 TPDirect.setupSDK(20555,"app_QGKeV7DULhNUSosQpoWmiBuVnIunDdFb3QIVhs53WyY3wycblpXpGn2gdTKu","sandbox")
 let fields = {
     number: {
@@ -49,17 +61,74 @@ function btn_onSubmit(){
     const tappayStatus = TPDirect.card.getTappayFieldsStatus();
     // 確認是否可以 getPrime
     if (tappayStatus.canGetPrime === false) {
-        alert('can not get prime')
+        console.log('can not get prime')
         return
+    }else if(tappayStatus.canGetPrime === true){
+        // Get prime
+        TPDirect.card.getPrime((result) => {
+            if (result.status !== 0) {
+                console.log('get prime error ' + result.msg)
+                return
+            }
+            else{
+                phoneNumber = document.getElementById("contactPhone").value;
+                prime = result.card.prime;
+                let data ={
+                    "prime":prime,
+                    "order":{
+                        "price":price,
+                        "trip":{
+                            "attraction":{
+                                "id":attractionId,
+                                "name":attractionName,
+                                "address":attractionAddress,
+                                "image":attractionImage
+                            },
+                            "date":date,
+                            "time":time
+                        },
+                        "contact":{
+                            "name":memberName,
+                            "email": memberEmail,
+                            "phone":phoneNumber
+                        }
+                    }
+                }
+                console.log(data);  
+                const URL = '/api/orders';
+                fetch(URL,{
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify(data),
+                    cache:"no-cache"
+                }).then(response =>{
+                    let myStatus = response.status;
+                    if (myStatus === 403){
+                        console.log("尚未登入");
+                        showLoginBox();
+                    }
+                    return response.json();
+                }).then(data =>{
+                    console.log(data.data.number);
+                    if (data.data != null && data.data.payment.status == 0){
+                        deleteBooking();
+                        window.location.href = "/thankyou?number=" + data.data.number;
+                    } else if (data.data != null && data.data.payment.status !=0 ){
+                        document.querySelector(".paymentError").textContent = "付款失敗: " + data.data.payment.message;
+                    } else if (data.error && data.message == "尚未登入系統") {
+                        showLoginBox();
+                    } else if (data.error && data.message == "訂單建立失敗") {
+                        document.querySelector(".paymentError").textContent = "訂單建立失敗";
+                    } else if (data.error) {
+                        console.log(data.message);
+                    }
+                }).catch(console.error)    
+            }
+        })
     }
-    // Get prime
-    TPDirect.card.getPrime((result) => {
-        if (result.status !== 0) {
-            alert('get prime error ' + result.msg)
-            return
-        }
-        alert('get prime 成功，prime: ' + result.card.prime)
-    })
+    
 }
 //開始預定行程按鈕按下去傳送訂單畫面資訊
 function btn_booking(){
@@ -147,12 +216,13 @@ function bookingDone(){
             deleteBooking();
         }
         else{
-            let attractionName = data["data"]["attraction"]["name"]
-            let attractionAddress = data["data"]["attraction"]["address"]
-            const attractionImage = data["data"]["attraction"]["images"]
-            let date = data["data"]["date"]
-            let time = data["data"]["time"]
-            let price = data["data"]["price"]
+            attractionId =data["data"]["attraction"]["id"]
+            attractionName = data["data"]["attraction"]["name"]
+            attractionAddress = data["data"]["attraction"]["address"]
+            attractionImage = data["data"]["attraction"]["images"]
+            date = data["data"]["date"]
+            time = data["data"]["time"]
+            price = data["data"]["price"]
             console.log(attractionName,attractionAddress,attractionImage,date,time,price);
             appendBookingData(attractionName,attractionAddress,attractionImage,date,time,price);
         }
@@ -174,8 +244,8 @@ function bookingDone(){
         }
         return response.json();
     }).then(data=>{
-            let memberName = data["data"]["name"]
-            let memberEmail = data["data"]["email"]
+            memberName = data["data"]["name"]
+            memberEmail = data["data"]["email"]
             appendMemberData(memberName,memberEmail);
     })
 }

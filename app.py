@@ -1,6 +1,8 @@
 from flask import *
 import mysql.connector
 from mysql.connector import Error
+import datetime
+import requests
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
@@ -115,7 +117,7 @@ def api_attraction(attractionId):
 		return jsonify({"error": True,"message":"伺服器錯誤"})	
 	connection.close()
 
-#會員系統
+#----------------------------會員系統---------------------------
 #註冊
 @app.route('/api/user',methods=['POST'])
 def signup():
@@ -215,7 +217,7 @@ def signout():
 		session.pop('email', None) #登出時一併消除儲存在cookies的資料
 		return Response(json.dumps({"ok":True, "message":"登出成功"}),mimetype="application/json"),200
 
-#預定行程
+#----------------------------預定行程---------------------------
 #建立新的預定行程
 @app.route("/api/booking",methods=['POST'])
 def newBooking():
@@ -308,5 +310,138 @@ def deleteBooking():
 		return Response(json.dumps({"error":True,"message":"伺服器錯誤"}),mimetype="application/json"),500
 	connection.close()	
 
+#-----------------------------訂單付款---------------------------
+#建立新的訂單，並完成付款程序
+@app.route("/api/orders", methods=['POST'])
+def orders():
+	#AJAX傳值給API
+	today = datetime.datetime.now()
+	bookingNumber = today.strftime('%Y%m%d%H%M%S%f')[:-3]
+	insertValues = request.get_json()
+	print(insertValues)
+	prime = insertValues["prime"]
+	price = insertValues["order"]["price"]
+	attractionId = insertValues["order"]["trip"]["attraction"]["id"]
+	attractionName =insertValues["order"]["trip"]["attraction"]["name"]
+	attractionAddress= insertValues["order"]["trip"]["attraction"]["address"]
+	attractionImage = insertValues["order"]["trip"]["attraction"]["image"]
+	date =insertValues["order"]["trip"]["date"]
+	time = insertValues["order"]["trip"]["time"]
+	memberName =insertValues["order"]["contact"]["name"]
+	memberEmail = insertValues["order"]["contact"]["email"]
+	memberPhone = insertValues["order"]["contact"]["phone"]
+	# payStatus 0:已付款 1:未付款
+	payStatus =1
+	try:
+		#主機名稱、帳號、密碼、選擇的資料庫
+		connection = mysql.connector.connect(host="localhost",user="root",password="nataliaSQL12345!",database="travel_spot")
+	except Error as e:
+		print("資料庫連接失敗: ", e)
+	if request.method == "POST":
+		stillLogin = session.get("email")
+		if stillLogin != None:
+			if prime != None:
+				mycursor = connection.cursor()
+				newData = "INSERT INTO orders (number,price,id,name,address,image,date,time,membername,memberemail,memberphone,status) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+				newValues = (bookingNumber,price,attractionId,attractionName,attractionAddress,attractionImage,date,time,memberName,memberEmail,memberPhone,payStatus)
+				mycursor.execute(newData,newValues)
+				connection.commit()
+				payurl ="https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
+				payHeader = {
+					'x-api-key':'partner_cO9DRkdRvL9ONttODiNp8pTsFLPyUFj6D4xUqzqqfLR1eh7pC1XCaczm'
+				}
+				payData = {
+					"prime":prime,
+					"partner_key":'partner_cO9DRkdRvL9ONttODiNp8pTsFLPyUFj6D4xUqzqqfLR1eh7pC1XCaczm',
+					"merchant_id":"20210604_TAISHIN",
+					"details":"TapPay Test",
+					"amount":price,
+					"cardholder":{
+						"phone_number":memberPhone,
+						"name":memberName,
+						"email":memberEmail
+					}
+				}
+				payrequest = requests.post(payurl, headers=payHeader, json=payData)
+				payresponse = json.loads(payrequest.text)
+				getStatus = payresponse["status"]
+				getMessage = payresponse["msg"]
+				print("message",getStatus,getMessage)
+				if getStatus == 0:
+					mycursor = connection.cursor()
+					mycursor.execute("UPDATE orders SET status =(%s) WHERE number = (%s)",(0,bookingNumber,))
+					connection.commit()
+					return Response(json.dumps({
+						"data":{
+							"number":bookingNumber,
+							"payment":{
+								"status":0,
+								"message":"未付款"
+							}
+						}
+					}),mimetype="application/json"),200
+				else:
+					return Response(json.dumps({
+						"data":{
+							"number":bookingNumber,
+							"payment":{
+								"status":getStatus,
+								"message":getMessage
+							}
+						}
+					}),mimetype="application/json"),200	
+			else:
+				return Response(json.dumps({"error":True,"message":"訂單建立失敗"}),mimetype="application/json"),400
+		else:
+			return Response(json.dumps({"error":True,"message":"未登入系統"}),mimetype="application/json"),403
+	else:
+		return Response(json.dumps({"error":True,"message":"伺服器錯誤"}),mimetype="application/json"),500
+
+# 根據訂單編號取得訂單資訊
+@app.route("/api/orders/<orderNumber>", methods=['GET'])
+def getorders():
+	try:
+		#主機名稱、帳號、密碼、選擇的資料庫
+		connection = mysql.connector.connect(host="localhost",user="root",password="nataliaSQL12345!",database="travel_spot")
+	except Error as e:
+		print("資料庫連接失敗: ", e)
+	if request.method == "GET":
+		stillLogin = session.get("email")
+		if stillLogin != None:
+			mycursor = connection.cursor()
+			mycursor.execute("SELECT * FROM orders WHERE number = %s",(orderNumber,))
+			getresult = mycursor.fetchone()
+			if getresult != None:
+				result = {
+					"number":getresult[0],
+					"price":getresult[1],
+					"trip":{
+						"attraction":{
+							"id":getresult[2],
+							"name":getresult[3],
+							"address":getresult[4],
+							"image":getresult[5]
+						},
+						"date":getresult[6],
+						"time":getresult[7]
+					},
+					"contact":{
+						"name":getresult[8],
+						"email":getresult[9],
+						"phone":getresult[10]
+					},
+					"status":getresult[11]
+				}
+				print(result)
+			return Response(json.dumps({"data":result}),mimetype="application/json"),200
+		else:
+			return Response(json.dumps({"error":True,"message":"未登入系統"}),mimetype="application/json"),403
+	else:
+		return Response(json.dumps({"error":True,"message":"伺服器錯誤"}),mimetype="application/json"),500
+
+
+	
+# @app.route("/api/orders/{orderNumber}", methods=['GET'])
+app.run( host="0.0.0.0", port=3000,debug= True)
 # app.run(port=3000,debug= True)
-app.run( host="0.0.0.0", port=3000,debug= True)	
+	

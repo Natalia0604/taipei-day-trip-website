@@ -59,7 +59,7 @@
                     <input class="contact_input" id="contactEmail" type="text" value="imyakkowu@gmail.com">
                 </div>
                 <div class="contact_div">手機號碼:
-                    <input class="contact_input" type="text">
+                    <input class="contact_input" id="contactPhone" type="text">
                 </div>
                 <div class="contact_remind">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
             </div>
@@ -80,6 +80,7 @@
             <div class="confirm" id="confirm">
                 <div class="total">總價:新台幣<span id="total"></span>元</div>
                 <button type="submit" class="btn_confirm" onclick="btn_onSubmit();">確認訂購並付款</button>
+                <p class="paymentError"></p>
             </div>
             <div class="noschedule" id="noschedule">目前沒有任何待預定的行程</div>
         </div>
