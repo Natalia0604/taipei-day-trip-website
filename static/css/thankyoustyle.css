@@ -46,7 +46,7 @@ blockquote, q {
 }
 /* -------------------------------------------------reset css---------------------------------------------------*/
 
-*{
+* {
     box-sizing:border-box;
     color:#666666;
 }
@@ -100,4 +100,148 @@ a{
 .btn_logout{
     display:none;
     cursor: pointer;
+}
+/*---------------------content---------------------*/
+.content{
+    width:1000px;
+    margin: auto;
+}
+.headline{
+    width:1000px;
+    margin:auto;
+    font-size: 19px;
+    font-weight: bold;
+    align-items: center;
+    padding-top: 46px;
+    padding-bottom: 35px;
+    line-height: 23px;
+}
+.headline>div{
+    margin-bottom: 15px;
+}
+.infoContainer{
+    width:1000px;
+    margin:auto;
+    align-items: center;
+}
+/*--------------------section--------------------------------*/
+.section{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+.imgContainer{
+    width: 266px;
+    height: 200px;
+    position: relative;
+    margin-right: 20px;
+}
+.bookingImage{
+    width:100%;
+    height: 100%;
+    position: absolute;
+}
+/*___________________info___________________*/
+.info{
+    font-size: 16px;
+}
+.info_div{
+    height:24px;
+    margin-bottom: 10px;
+}
+.bookingName,
+.info_Name_div{
+    height:24px;
+    margin-bottom: 10px;
+    font-weight: bold;;
+    color:#448899;
+    padding-bottom: 30px;
+}
+.infobold{
+    font-weight: bold;
+}
+/*__________________contactForm________________________________*/
+
+.title{
+    font-size: 19px;
+    font-weight: bold;
+    margin-top:44px;
+    margin-bottom: 20px;
+}
+.contact_div,
+.contact_remind{
+    height: 38px;
+    margin-bottom: 15px;
+    color:#666666;
+}
+
+/* ---------------------------------------------------------footer------------------------------------------------ */
+footer{
+    margin-top:10px;
+    height:104px;
+    background-color: #757575;
+    line-height:104px;
+    text-align: center;
+}
+.copyright{
+    color:#FFFFFF;
+    display:inline-block;
+}
+/* media query RWD響應式設計*/
+
+@media only screen and (max-width:1199px){
+    .content{
+        width:100%;
+    }
+    .headline{
+        margin-left: 5%;
+        width:100%;
+    }
+    .section{
+        align-items: center;
+    }
+    .info{
+        width:100%;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    .imgContainer{
+        width: 60%;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 20px;
+    }
+    .bookingImage{
+        width:100%;
+        height: 100%;
+    }
+    .infoContainer{
+        width: 100%;
+        margin-left: 5%;
+    }
+}
+
+@media only screen and (max-width:360px){
+    .content{
+        width: 100%;
+        margin-left: 5px;
+    }
+    .headline{
+        width:100%;
+    }
+    .section{
+        width: 100%;
+    }
+    .imgContainer{
+        width: 100%;
+        margin: 0;
+        margin-bottom: 20px;
+    }
+    .bookingImage{
+        width:100%;
+    }
+    .infoContainer{
+        width: 100%;
+        margin-left: 5px;
+    }
 }

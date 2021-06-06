@@ -26,13 +26,13 @@
                 <div class="imgContainer">
                     <img class="bookingImage" src="http://fakeimg.pl/270x162">
                 </div>
-                <img  class="icon_delete" onclick="deleteBooking();" src="/static/img/icon_delete.png">
+                <img  class="icon_delete" onclick="deleteBooking();" src="/static/img/icon_delete.png"> 
                 <div class="info" id="info">
                     <div class="info_Name_div">
                         台北一日遊: <span class="bookingName" id="bookingName"></span>
                     </div>
                     <div class="info_div"> 
-                        <span class="infobold">日期: </span>
+                        <span class="infobold">日期:</span>
                         <span class="date" id="date"></span>
                     </div>
                     <div class="info_div">
@@ -50,7 +50,7 @@
                 </div>
             </div>
         <hr>
-            <div class="contactForm" id="contactForm">
+            <div class="contactForm" id="contactForm"> 
                 <div class="title">您的聯絡資訊</div>
                 <div class="contact_div">聯絡姓名:
                     <input class="contact_input" id="contactName" type="text" value="Yakko">
@@ -66,15 +66,19 @@
         <hr>
             <div class="payment" id="payment">
                 <div class="title">信用卡付款資訊</div>
-                <div class="payment_div">卡片號碼:
-                    <div class="tpfield" id="card-number"></div>
+                <div class="payment_div">
+                    <div class="payment_text">卡片號碼:</div>
+                    <div class="tpfield" id="card-number" ></div>
                 </div>
-                <div class="payment_div">過期時間:
+                <div class="payment_div">
+                    <div class="payment_text">過期時間:</div>
                     <div class="tpfield" id="card-expiration-date"></div>
                 </div>
-                <div class="payment_div">驗證密碼:
-                    <div class="tpfield" id="card-ccv"></div> 
-                </div>
+                <div class="payment_div">
+                    <div class="payment_text">驗證密碼:</div>
+                    <div class="tpfield" id="card-ccv" ></div>
+                    
+                </div> 
             </div> 
         <hr>
             <div class="confirm" id="confirm">
@@ -83,7 +87,8 @@
                 <p class="paymentError"></p>
             </div>
             <div class="noschedule" id="noschedule">目前沒有任何待預定的行程</div>
-        </div>
+            
+        </div> 
         <footer id="footer">
             <div class="copyright">COPYRIGHT © 2021 台北一日遊</div>
         </footer>

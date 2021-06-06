@@ -398,8 +398,8 @@ def orders():
 		return Response(json.dumps({"error":True,"message":"伺服器錯誤"}),mimetype="application/json"),500
 
 # 根據訂單編號取得訂單資訊
-@app.route("/api/orders/<orderNumber>", methods=['GET'])
-def getorders():
+@app.route("/api/order/<orderNumber>", methods=['GET'])
+def getorders(orderNumber):
 	try:
 		#主機名稱、帳號、密碼、選擇的資料庫
 		connection = mysql.connector.connect(host="localhost",user="root",password="nataliaSQL12345!",database="travel_spot")
@@ -411,6 +411,7 @@ def getorders():
 			mycursor = connection.cursor()
 			mycursor.execute("SELECT * FROM orders WHERE number = %s",(orderNumber,))
 			getresult = mycursor.fetchone()
+			print(getresult)
 			if getresult != None:
 				result = {
 					"number":getresult[0],
@@ -439,9 +440,6 @@ def getorders():
 	else:
 		return Response(json.dumps({"error":True,"message":"伺服器錯誤"}),mimetype="application/json"),500
 
-
-	
-# @app.route("/api/orders/{orderNumber}", methods=['GET'])
-app.run( host="0.0.0.0", port=3000,debug= True)
-# app.run(port=3000,debug= True)
+# app.run( host="0.0.0.0", port=3000,debug= True)
+app.run(port=3000,debug= True)
 	
