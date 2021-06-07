@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <title>台北一日遊booking</title>
+        <link href="/static/css/userstyle.css" rel="stylesheet" type="text/css" media="all"/>
+        <link href="/static/css/thankyoustyle.css" rel="stylesheet" type="text/css" media="all"/>
+    </head>
+    <body>
+        <nav class="header">
+            <div class="navContainer">
+                <a class="taipeiDayTrip" id="taipeiDayTrip">台北一日遊</a>
+                <ul class="menu">
+                    <li><a onclick="loginCheck_booking();">預定行程</a></li>
+                    <li><a class="btn_member" id="btn_member" onclick="showLoginBox();">登入/註冊</a></li>
+                    <li><a class="btn_logout" id="btn_logout" onclick="logout();">登出系統</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="content" id="content">
+            <div class="headline" id="headline">
+                <div><span id="headlineName"></span>，感謝您的訂購，本次的行程資訊如下:</div>
+                <div>訂單編號: <span class="number" id="number"></span></div>
+            </div>
+            <div class="section" id="section">
+                <div class="imgContainer">
+                    <img class="bookingImage" src="http://fakeimg.pl/270x162">
+                </div>
+                <div class="info" id="info">
+                    <div class="info_Name_div">
+                        台北一日遊: <span class="bookingName" id="bookingName"></span>
+                    </div>
+                    <div class="info_div"> 
+                        <span class="infobold">日期:</span>
+                        <span class="bookingDate" id="bookingDate"></span>
+                    </div>
+                    <div class="info_div">
+                        <span class="infobold">時間: </span>
+                        <span class="time" id="time"></span>
+                    </div>
+                    <div class="info_div">
+                        <span class="infobold">費用: </span>
+                        新台幣<span class="price" id="price"></span>元
+                    </div>
+                    <div class="info_div">
+                        <span class="infobold">地點: </span>
+                        <span class="bookingAddress" id="bookingAddress"></span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="infoContainer" id="infoContainer">
+                <div class="title" id="title">您的訂購資訊: </div>
+                <div  class="contact_div">聯絡姓名:<span class="contactName" id="contactName"></span></div>
+                <div  class="contact_div">聯絡信箱:<span class="contactEmail" id="contactEmail"></span></div>
+                <div  class="contact_div">手機號碼:<span class="contactPhone" id="contactPhone" type="text"></span></div>
+                <div class="contact_remind">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+            </div>
+        </div>
+        <footer id="footer">
+            <div class="copyright">COPYRIGHT © 2021 台北一日遊</div>
+        </footer>
+        <script type="text/javascript" src="/static/js/user.js"></script>
+        <script type="text/javascript" src="/static/js/thankyou.js"></script>
+    </body>
+</html>
+

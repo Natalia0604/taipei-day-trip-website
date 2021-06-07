@@ -17,8 +17,6 @@ fetch("/api/attraction/"+spotId, {method:"get"}).then(function(response){
 
 
 function appendData(spotName,spotCategory,spotMrt,spotDescription,spotAddress,spotTransport){
-    // const img = document.getElementById("contentImg");
-    // img.setAttribute("src",image[0]); //目前只顯示第一張照片
     //name
     let nameString = document.createTextNode(spotName);
     let name = document.getElementById("name");
@@ -108,7 +106,7 @@ function appendDot(image){
 
 //選擇上半天
 document.getElementById("morning_btn").onclick=function(){    
-    let priceString= document.createTextNode("新台幣2000元");
+    let priceString= document.createTextNode("2000");
     let NTD = document.getElementById("NTD");
     NTD.innerHTML="";
     NTD.appendChild(priceString);
@@ -116,7 +114,7 @@ document.getElementById("morning_btn").onclick=function(){
 
 //選擇下半天
 document.getElementById("afternoon_btn").onclick=function(){ 
-    let priceString= document.createTextNode("新台幣2500元");
+    let priceString= document.createTextNode("2500");
     let NTD = document.getElementById("NTD");
     NTD.innerHTML="";
     NTD.appendChild(priceString);  

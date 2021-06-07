@@ -84,20 +84,17 @@ function loginCheck(){
         headers:{
             "Content-Type":"application/json"
         },
-        // body:JSON.stringify(data),
         cache: "no-cache"
     }).then(response =>{
+            let myStatus = response.status;    
+            if (myStatus === 200){
+                change_btn_word();
+            }
+            else if (myStatus === 403){
+                console.log("尚未登入");
+                // showLoginBox();
+            }
             return response.json();
-    }).then(data => {
-        let ID = data["data"]["id"]
-        console.log(ID);
-        if (ID !== null){
-            change_btn_word();
-        }
-        else if (ID === null){
-            console.log("尚未登入");
-            showLoginBox();
-        }
     }).catch(console.error);
 }
 

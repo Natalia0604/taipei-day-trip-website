@@ -89,6 +89,7 @@ li{
 }
 li:hover{
     font-weight: bold;
+    cursor: pointer;
 }
 a{
     text-decoration: none;
@@ -97,7 +98,7 @@ a{
 }
 .btn_logout{
     display:none;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 /*------------------------------------------------------banner------------------------------------------------- */
