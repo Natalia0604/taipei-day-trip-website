@@ -6,11 +6,11 @@
 ## Demo
 * 台北一日遊網址 : https://travel-taipei-spot.herokuapp.com/
 
-* 網站登入試用
+* 網站登入試用:
     Test acccunt : testuser@gmail.com
     password : 12345
 
-* 金流服務試用
+* 金流服務試用:
     Credit Card : 4242-4242-4242-4242
     Date : 01/23
     CVV : 123
@@ -18,7 +18,7 @@
 ## 使用技術
 ### 資料整理
 * 採用Python進行資料處理，並將景點資料匯入MySQL中。
-### 網站建置:
+### 網站建置
 * 原生 HTML + CSS 撰寫，支援RWD。
 * 原生 Javascript 撰寫前端，無使用第三方套件。
 * Python Flask 撰寫後端 ，使用 Session 紀錄會員資訊。
