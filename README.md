@@ -6,11 +6,11 @@
 ## Demo
 * 台北一日遊網址 : https://travel-taipei-spot.herokuapp.com/
 
-* 網站登入試用:
+* 網站登入試用
     Test acccunt : testuser@gmail.com
     password : 12345
 
-* 金流服務試用:
+* 金流服務試用
     Credit Card : 4242-4242-4242-4242
     Date : 01/23
     CVV : 123
@@ -28,7 +28,7 @@
 * 原先使用 AWS EC2 部屬網站，但因期限問題將網站轉移至 Heroku 雲端平台部屬並使用 uptimerobot 定時喚醒。
 * 使用 Heroku clearDB 存放觀光景點資料。
 
-## 功能介紹:
+## 功能介紹
 ### 首頁
 * 可以透過搜尋功能輸入關鍵字尋找該景點。(ex. 搜尋有關山的景點)
 ![](https://i.imgur.com/gR393t1.jpg)
